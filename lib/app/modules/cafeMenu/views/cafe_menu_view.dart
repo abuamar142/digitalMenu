@@ -30,11 +30,20 @@ class CafeMenuView extends GetView<CafeMenuController> {
         children: [
           SizedBox(
             height: Get.height - AppBar().preferredSize.height * 2 - 50,
-            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: productController.streamProducts(),
+            child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              future: productController.fetchProducts(), // Menggunakan future untuk mengambil data sekali
               builder: (context, snapProduct) {
                 if (snapProduct.connectionState == ConnectionState.waiting) {
                   return const LoadingScreenView();
+                }
+
+                if (snapProduct.hasError) {
+                  return const Center(
+                    child: Text(
+                      'Error loading products',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  );
                 }
 
                 if (snapProduct.data!.docs.isEmpty) {
@@ -46,125 +55,256 @@ class CafeMenuView extends GetView<CafeMenuController> {
                   );
                 }
 
-                if (snapProduct.hasData && snapProduct.data!.docs.isNotEmpty) {
-                  List<Product> allProducts = [];
+                List<Product> allProducts = [];
 
-                  for (var element in snapProduct.data!.docs) {
-                    allProducts.add(Product.fromJson(element.data()));
-                  }
+                for (var element in snapProduct.data!.docs) {
+                  allProducts.add(Product.fromJson(element.data()));
+                }
 
-                  return ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    itemCount: allProducts.length,
-                    itemBuilder: (context, index) {
-                      Product product = allProducts[index];
+                return allProducts.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: allProducts.length,
+                        itemBuilder: (context, index) {
+                          Product product = allProducts[index];
 
-                      return InkWell(
-                        onTap: () {
-                          Get.toNamed(Routes.DETAIL_MENU, arguments: product);
-                        },
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          elevation: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return SizedBox(
-                                  width: constraints.maxWidth,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 100,
-                                        width: 100,
-                                        child: product.imageURL!.isNotEmpty
-                                            ? Image.network(
-                                                product.imageURL.toString(),
-                                                fit: BoxFit.contain,
-                                              )
-                                            : const Center(
-                                                child: Text(
-                                                  'None',
-                                                ),
-                                              ),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              product.name.toString(),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          return InkWell(
+                            onTap: () {
+                              Get.toNamed(Routes.DETAIL_MENU, arguments: product);
+                            },
+                            child: Card(
+                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                                child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    return SizedBox(
+                                      width: constraints.maxWidth,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                            child: product.imageURL!.isNotEmpty
+                                                ? Image.network(
+                                                    product.imageURL.toString(),
+                                                    fit: BoxFit.contain,
+                                                  )
+                                                : const Center(
+                                                    child: Text(
+                                                      'None',
+                                                    ),
+                                                  ),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Rp.${formattedNumber(product.price.toInt())}',
+                                                  product.name.toString(),
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
                                                   style: const TextStyle(
-                                                    fontSize: 12,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                // Add button
-                                                InkWell(
-                                                  onTap: () {
-                                                    Get.dialog(
-                                                      SingleChildScrollView(
-                                                        child: SizedBox(
-                                                          height: Get.height,
-                                                          child: Dialog(
-                                                            child: DialogCard(product: product),
+                                                const SizedBox(height: 16),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Rp.${formattedNumber(product.price.toInt())}',
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                    // Add button
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Get.dialog(
+                                                          SingleChildScrollView(
+                                                            child: SizedBox(
+                                                              height: Get.height,
+                                                              child: Dialog(
+                                                                child: DialogCard(product: product),
+                                                              ),
+                                                            ),
                                                           ),
+                                                        );
+                                                      },
+                                                      child: Ink(
+                                                        decoration: BoxDecoration(
+                                                          color: AppColors.primary,
+                                                          borderRadius: BorderRadius.circular(8),
+                                                        ),
+                                                        padding: const EdgeInsets.all(4),
+                                                        child: Icon(
+                                                          Icons.add_outlined,
+                                                          color: AppColors.white,
                                                         ),
                                                       ),
-                                                    );
-                                                  },
-                                                  child: Ink(
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors.primary,
-                                                      borderRadius: BorderRadius.circular(8),
                                                     ),
-                                                    padding: const EdgeInsets.all(4),
-                                                    child: Icon(
-                                                      Icons.add_outlined,
-                                                      color: AppColors.white,
-                                                    ),
-                                                  ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text(
+                          'Products Empty',
+                          style: TextStyle(fontSize: 16),
                         ),
                       );
-                    },
-                  );
-                } else {
-                  return const Center(
-                    child: Text(
-                      'Products Empty',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  );
-                }
               },
             ),
+            // child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            //   stream: productController.streamProducts(),
+            //   builder: (context, snapProduct) {
+            //     if (snapProduct.connectionState == ConnectionState.waiting) {
+            //       return const LoadingScreenView();
+            //     }
+
+            //     if (snapProduct.data!.docs.isEmpty) {
+            //       return const Center(
+            //         child: Text(
+            //           'Products empty',
+            //           style: TextStyle(fontSize: 16),
+            //         ),
+            //       );
+            //     }
+
+            //     if (snapProduct.hasData && snapProduct.data!.docs.isNotEmpty) {
+            //       List<Product> allProducts = [];
+
+            //       for (var element in snapProduct.data!.docs) {
+            //         allProducts.add(Product.fromJson(element.data()));
+            //       }
+
+            //       return ListView.builder(
+            //         padding: const EdgeInsets.symmetric(vertical: 8),
+            //         itemCount: allProducts.length,
+            //         itemBuilder: (context, index) {
+            //           Product product = allProducts[index];
+
+            //           return InkWell(
+            //             onTap: () {
+            //               Get.toNamed(Routes.DETAIL_MENU, arguments: product);
+            //             },
+            //             child: Card(
+            //               margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            //               elevation: 5,
+            //               child: Padding(
+            //                 padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            //                 child: LayoutBuilder(
+            //                   builder: (context, constraints) {
+            //                     return SizedBox(
+            //                       width: constraints.maxWidth,
+            //                       child: Row(
+            //                         crossAxisAlignment: CrossAxisAlignment.center,
+            //                         children: [
+            //                           SizedBox(
+            //                             height: 100,
+            //                             width: 100,
+            //                             child: product.imageURL!.isNotEmpty
+            //                                 ? Image.network(
+            //                                     product.imageURL.toString(),
+            //                                     fit: BoxFit.contain,
+            //                                   )
+            //                                 : const Center(
+            //                                     child: Text(
+            //                                       'None',
+            //                                     ),
+            //                                   ),
+            //                           ),
+            //                           const SizedBox(width: 16),
+            //                           Expanded(
+            //                             child: Column(
+            //                               mainAxisAlignment: MainAxisAlignment.center,
+            //                               crossAxisAlignment: CrossAxisAlignment.start,
+            //                               children: [
+            //                                 Text(
+            //                                   product.name.toString(),
+            //                                   maxLines: 2,
+            //                                   overflow: TextOverflow.ellipsis,
+            //                                   style: const TextStyle(
+            //                                     fontSize: 16,
+            //                                     fontWeight: FontWeight.bold,
+            //                                   ),
+            //                                 ),
+            //                                 const SizedBox(height: 16),
+            //                                 Row(
+            //                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                                   children: [
+            //                                     Text(
+            //                                       'Rp.${formattedNumber(product.price.toInt())}',
+            //                                       style: const TextStyle(
+            //                                         fontSize: 12,
+            //                                       ),
+            //                                     ),
+            //                                     // Add button
+            //                                     InkWell(
+            //                                       onTap: () {
+            //                                         Get.dialog(
+            //                                           SingleChildScrollView(
+            //                                             child: SizedBox(
+            //                                               height: Get.height,
+            //                                               child: Dialog(
+            //                                                 child: DialogCard(product: product),
+            //                                               ),
+            //                                             ),
+            //                                           ),
+            //                                         );
+            //                                       },
+            //                                       child: Ink(
+            //                                         decoration: BoxDecoration(
+            //                                           color: AppColors.primary,
+            //                                           borderRadius: BorderRadius.circular(8),
+            //                                         ),
+            //                                         padding: const EdgeInsets.all(4),
+            //                                         child: Icon(
+            //                                           Icons.add_outlined,
+            //                                           color: AppColors.white,
+            //                                         ),
+            //                                       ),
+            //                                     ),
+            //                                   ],
+            //                                 ),
+            //                               ],
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     );
+            //                   },
+            //                 ),
+            //               ),
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     } else {
+            //       return const Center(
+            //         child: Text(
+            //           'Products Empty',
+            //           style: TextStyle(fontSize: 16),
+            //         ),
+            //       );
+            //     }
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 16, right: 16, left: 16),

@@ -43,7 +43,7 @@ class CafeMenuController extends GetxController {
           note.text,
         ),
       );
-      int index = sales.indexWhere((element) => element.id == product.productId && element.id == product.productId);
+
       Get.back();
     } catch (e) {
       Get.snackbar(AppStrings.success, e.toString());
