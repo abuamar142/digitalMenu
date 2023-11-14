@@ -60,6 +60,16 @@ class ProductController extends GetxController {
     }
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchProducts() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await firestore.collection('products').get();
+
+      return snapshot;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Map<String, dynamic>> deleteProduct(String productId, String downloadURL) async {
     try {
       print("download url : ${downloadURL.toString()}");
