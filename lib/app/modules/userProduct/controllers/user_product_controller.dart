@@ -1,11 +1,12 @@
 import 'package:digital_menu/app/core/values/strings.dart';
 import 'package:digital_menu/app/data/model/product.dart';
 import 'package:digital_menu/app/data/model/transaction.dart';
+import 'package:digital_menu/app/data/services/product.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class CafeMenuController extends GetxController {
+class UserProductController extends GetxController {
   RxList<Sale> sales = RxList.empty();
 
   double get totalPriceSales {
@@ -48,5 +49,23 @@ class CafeMenuController extends GetxController {
     } catch (e) {
       Get.snackbar(AppStrings.success, e.toString());
     }
+  }
+
+  RxList<Product> listProduct = RxList.empty();
+
+  Future<Map<String, dynamic>> getProduct() async {
+    Map<String, dynamic> hasilProduct = await ProductService.getProduct();
+
+    if (hasilProduct['error'] == false) {
+      List<dynamic> data = hasilProduct['data'];
+
+      for (var element in data) {
+        listProduct.add(Product.fromJson(element));
+      }
+    } else {
+      Get.snackbar('Warning', hasilProduct['message']);
+    }
+
+    return hasilProduct;
   }
 }

@@ -29,10 +29,10 @@ class Sale {
 
   factory Sale.fromProductItem(Product productItem, int totalItem, double totalPrice, bool spicy, String note) {
     return Sale(
-      id: productItem.productId,
+      id: productItem.id.toString(),
       name: productItem.name.toString(),
       price: productItem.price.toDouble(),
-      image: productItem.imageURL.toString(),
+      image: productItem.imageUrl.toString(),
       totalItem: totalItem,
       totalPrice: totalPrice,
       spicy: spicy,

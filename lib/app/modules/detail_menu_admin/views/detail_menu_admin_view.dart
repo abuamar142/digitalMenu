@@ -17,12 +17,12 @@ class DetailMenuAdminView extends GetView<DetailMenuAdminController> {
   Widget build(BuildContext context) {
     final Product product = Get.arguments;
 
-    controller.productIdController.text = product.productId;
+    controller.productIdController.text = product.id.toString();
     controller.categoryController.text = product.category;
     controller.nameController.text = product.name;
     controller.priceController.text = product.price.toString();
     controller.descriptionController.text = product.description;
-    controller.imageURLController.text = product.imageURL.toString();
+    controller.imageUrlController.text = product.imageUrl.toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -41,8 +41,8 @@ class DetailMenuAdminView extends GetView<DetailMenuAdminController> {
                 alignment: Alignment.center,
                 child: SizedBox(
                   height: 200,
-                  child: controller.imageURLController.text.isNotEmpty
-                      ? Image.network(product.imageURL.toString())
+                  child: controller.imageUrlController.text.isNotEmpty
+                      ? Image.network(product.imageUrl.toString())
                       : const Center(
                           child: Text(
                             'None',
@@ -135,9 +135,7 @@ class DetailMenuAdminView extends GetView<DetailMenuAdminController> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                          onPressed: () async {
-                            controller.updateProduct();
-                          },
+                          onPressed: () async {},
                           child: Obx(
                             () => controller.isLoadingUpdate.isFalse
                                 ? const Text('Confirm')
@@ -172,9 +170,7 @@ class DetailMenuAdminView extends GetView<DetailMenuAdminController> {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                      onPressed: () async {
-                        controller.deleteProduct(product.productId, product.imageURL.toString());
-                      },
+                      onPressed: () async {},
                       child: Obx(
                         () => controller.isLoadingDelete.isFalse
                             ? const Text('Confirm')

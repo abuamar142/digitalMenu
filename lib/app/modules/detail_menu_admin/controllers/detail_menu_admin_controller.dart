@@ -11,7 +11,7 @@ class DetailMenuAdminController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController imageURLController = TextEditingController();
+  final TextEditingController imageUrlController = TextEditingController();
 
   RxBool isLoadingPickFile = false.obs;
   RxBool isLoadingUpdate = false.obs;
@@ -28,12 +28,12 @@ class DetailMenuAdminController extends GetxController {
       if (filePath.isNotEmpty) {
         Map<String, dynamic> resultUpload = await productController.uploadFileToFirebaseStorage(filePath, nameController.text);
 
-        if (imageURLController.text.isNotEmpty) {
-          await productController.deleteFile(imageURLController.text);
-          imageURLController.text = '';
+        if (imageUrlController.text.isNotEmpty) {
+          await productController.deleteFile(imageUrlController.text);
+          imageUrlController.text = '';
         }
 
-        imageURLController.text = resultUpload['downloadURL'];
+        imageUrlController.text = resultUpload['downloadURL'];
       }
 
       Map<String, dynamic> result = await productController.updateProduct({
@@ -42,7 +42,7 @@ class DetailMenuAdminController extends GetxController {
         'category': categoryController.text,
         'price': int.tryParse(priceController.text),
         'description': descriptionController.text,
-        'imageURL': imageURLController.text, // Menggunakan newImageURL yang mungkin kosong
+        'imageURL': imageUrlController.text, // Menggunakan newImageURL yang mungkin kosong
       });
 
       print('back back');

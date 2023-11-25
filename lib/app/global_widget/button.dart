@@ -80,44 +80,44 @@ class LargeButton extends StatelessWidget {
   }
 }
 
-class Dropdown extends StatelessWidget {
-  const Dropdown({
-    super.key,
-    required this.listItems,
-    required this.selectedValue,
-  });
+// class Dropdown extends StatelessWidget {
+//   const Dropdown({
+//     super.key,
+//     required this.listItems,
+//     required this.selectedValue,
+//   });
 
-  final List<String> listItems;
-  final RxString selectedValue;
+//   final List<String> listItems;
+//   final RxString selectedValue;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.grey), borderRadius: BorderRadius.circular(AppSizes.radius8)),
-      child: Obx(
-        () => DropdownButton<String>(
-          padding: const EdgeInsets.symmetric(horizontal: AppSizes.dimen12),
-          iconSize: AppSizes.dimen24,
-          isExpanded: true,
-          itemHeight: AppSizes.dimen48,
-          underline: Container(),
-          value: selectedValue.value,
-          items: listItems
-              .map(
-                (item) => DropdownMenuItem(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: AppTextStyles.textStyleW500S14,
-                  ),
-                ),
-              )
-              .toList(),
-          onChanged: (item) => selectedValue.value = item!,
-          borderRadius: BorderRadius.circular(AppSizes.radius8),
-          style: AppTextStyles.textStyleW500S14,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.grey), borderRadius: BorderRadius.circular(AppSizes.radius8)),
+//       child: Obx(
+//         () => DropdownButton<String>(
+//           padding: const EdgeInsets.symmetric(horizontal: AppSizes.dimen12),
+//           iconSize: AppSizes.dimen24,
+//           isExpanded: true,
+//           itemHeight: AppSizes.dimen48,
+//           underline: Container(),
+//           value: selectedValue.value,
+//           items: listItems
+//               .map(
+//                 (item) => DropdownProduct(
+//                   value: item,
+//                   child: Text(
+//                     item,
+//                     style: AppTextStyles.textStyleW500S14,
+//                   ),
+//                 ),
+//               )
+//               .toList(),
+//           onChanged: (item) => selectedValue.value = item!,
+//           borderRadius: BorderRadius.circular(AppSizes.radius8),
+//           style: AppTextStyles.textStyleW500S14,
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -40,8 +40,11 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCOjgfxEc3Sxv8V5rd5eZ_8FCU2ca9yiJo",
       authDomain: "digital-menu-73083.firebaseapp.com",
@@ -50,9 +53,9 @@
       messagingSenderId: "972789726054",
       appId: "1:972789726054:web:96dc5190bb102ad2c426a7"
     };
-
+  
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
   </script>
   <script>
     window.flutterWebRenderer = 'html';

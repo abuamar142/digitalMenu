@@ -54,7 +54,7 @@ class AllProductAdminView extends GetView<AllProductAdminController> {
               itemBuilder: (context, index) {
                 Product product = allProducts[index];
 
-                print(product.imageURL);
+                print(product.imageUrl);
 
                 return InkWell(
                   onTap: () {
@@ -70,8 +70,8 @@ class AllProductAdminView extends GetView<AllProductAdminController> {
                           SizedBox(
                             height: 100,
                             width: 100,
-                            child: product.imageURL!.isNotEmpty
-                                ? Image.network(product.imageURL.toString())
+                            child: product.imageUrl.isNotEmpty
+                                ? Image.network(product.imageUrl.toString())
                                 : const Center(
                                     child: Text(
                                       'None',
