@@ -22,7 +22,7 @@ class DialogCard2 extends StatelessWidget {
     RxBool isLoading = false.obs;
     RxBool addNote = false.obs;
 
-    // CafeMenuController controller = Get.find<CafeMenuController>();
+    // UserProductController controller = Get.find<UserProductController>();
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -46,9 +46,9 @@ class DialogCard2 extends StatelessWidget {
                           SizedBox(
                             height: 200,
                             width: double.infinity,
-                            child: product.productId.isNotEmpty
+                            child: product.id.toString().isNotEmpty
                                 ? Image.asset(
-                                    product.productId.toString(),
+                                    product.id.toString(),
                                     fit: BoxFit.cover,
                                   )
                                 : const Center(
@@ -186,7 +186,7 @@ class DialogCard2 extends StatelessWidget {
                       onPressed: () {
                         try {
                           // controller.selectedMenu.add(
-                          //   SelectedMenuItem.fromMenuItem(
+                          //   SelectedProduct.fromProduct(
                           //     menuItem,
                           //     amount.toInt(),
                           //     menuItem.price * amount.toInt(),

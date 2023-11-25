@@ -33,10 +33,10 @@ class AddProductView extends GetView<AddProductController> {
                 height: Get.height * 0.4,
                 fit: BoxFit.fitHeight,
               ),
-              Dropdown(
-                listItems: controller.listCategory,
-                selectedValue: controller.selectedCategory,
-              ),
+              // Dropdown(
+              //   listItems: controller.listCategory,
+              //   selectedValue: controller.selectedCategory,
+              // ),
               const SizedBox(height: AppSizes.dimen16),
               TextField(
                 autocorrect: false,

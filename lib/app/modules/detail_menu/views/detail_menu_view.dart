@@ -25,8 +25,8 @@ class DetailMenuView extends GetView<DetailMenuController> {
           children: [
             SizedBox(
               height: 320,
-              child: product.imageURL!.isNotEmpty
-                  ? Image.network(product.imageURL.toString())
+              child: product.imageUrl.isNotEmpty
+                  ? Image.network(product.imageUrl.toString())
                   : const Center(
                       child: Text(
                         'None',

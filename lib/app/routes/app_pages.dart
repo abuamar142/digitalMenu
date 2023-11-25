@@ -4,8 +4,8 @@ import '../modules/add_product/bindings/add_product_binding.dart';
 import '../modules/add_product/views/add_product_view.dart';
 import '../modules/all_product_admin/bindings/all_product_admin_binding.dart';
 import '../modules/all_product_admin/views/all_product_admin_view.dart';
-import '../modules/cafeMenu/bindings/cafe_menu_binding.dart';
-import '../modules/cafeMenu/views/cafe_menu_view.dart';
+import '../modules/userProduct/bindings/user_product_binding.dart';
+import '../modules/userProduct/views/user_product_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
@@ -34,8 +34,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CAFE_MENU,
-      page: () => CafeMenuView(),
-      binding: CafeMenuBinding(),
+      page: () => const UserProductView(),
+      binding: UserProductBinding(),
     ),
     GetPage(
       name: _Paths.CHECKOUT,

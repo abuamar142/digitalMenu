@@ -75,7 +75,7 @@ class HomeView extends GetView<HomeController> {
                       const SizedBox(height: AppSizes.dimen16),
                       // Login admin button
                       Visibility(
-                        visible: UniversalPlatform.isAndroid,
+                        visible: UniversalPlatform.isLinux,
                         child: TextButton(
                           onPressed: () {
                             Get.toNamed(Routes.LOGIN);
