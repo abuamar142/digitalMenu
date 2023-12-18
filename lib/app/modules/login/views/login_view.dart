@@ -21,24 +21,27 @@ class LoginView extends GetView<LoginController> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-          child: SizedBox(
-            height: Get.height * 0.8,
-            child: Column(
-              children: [
-                SvgPicture.asset(
+      body: Padding(
+        padding: AppSizes.marginAppHaveAppBar,
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: constraints.maxHeight * 0.4,
+                child: SvgPicture.asset(
                   'assets/icons/login.svg',
-                  height: Get.height * 0.4,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextField(
+              ),
+              SizedBox(
+                height: constraints.maxHeight * 0.6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: AppSizes.heightTextField,
+                      child: TextField(
                         autocorrect: false,
                         controller: controller.emailController,
                         keyboardType: TextInputType.text,
@@ -51,8 +54,11 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSizes.dimen16),
-                      Obx(
+                    ),
+                    const SizedBox(height: AppSizes.dimen16),
+                    SizedBox(
+                      height: AppSizes.heightTextField,
+                      child: Obx(
                         () => TextField(
                           autocorrect: false,
                           controller: controller.passwordController,
@@ -77,24 +83,23 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSizes.dimen32,
-                      ),
-                      LargeButton(
-                        backgroundColor: AppColors.primary,
-                        isLoading: controller.isLoading,
-                        onPressed: () {
-                          controller.login();
-                        },
-                        textButton: 'Login',
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: AppSizes.dimen32),
+                    LargeButton(
+                      backgroundColor: AppColors.primary,
+                      isLoading: controller.isLoading,
+                      onPressed: () {
+                        controller.login();
+                      },
+                      textButton: 'Login',
+                    ),
+                    const SizedBox(height: AppSizes.dimen64)
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

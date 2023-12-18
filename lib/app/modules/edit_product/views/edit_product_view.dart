@@ -1,25 +1,26 @@
-import '../../../core/theme/colors.dart';
-import '../../../core/theme/sizes.dart';
-import '../../../core/theme/text.dart';
-import '../../../global_widget/button.dart';
+import 'package:digital_menu/app/core/theme/colors.dart';
+import 'package:digital_menu/app/core/theme/sizes.dart';
+import 'package:digital_menu/app/core/theme/text.dart';
+import 'package:digital_menu/app/data/model/product.dart';
+import 'package:digital_menu/app/global_widget/button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:svg_flutter/svg.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
-import '../controllers/add_product_controller.dart';
+import '../controllers/edit_product_controller.dart';
 
-class AddProductView extends GetView<AddProductController> {
-  const AddProductView({super.key});
+class EditProductView extends GetView<EditProductController> {
+  const EditProductView({super.key});
   @override
   Widget build(BuildContext context) {
-    controller.nameController.text = 'Magelangan';
-    controller.priceController.text = '12000';
-    controller.descriptionController.text = 'Nasi goreng mawut dengan mie dari Indomie';
+    controller.nameController.text = controller.product.name;
+    controller.priceController.text = controller.product.price.toString();
+    controller.descriptionController.text = controller.product.description;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Product'),
+        title: const Text('Edit Product'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -29,9 +30,9 @@ class AddProductView extends GetView<AddProductController> {
           child: Column(
             children: [
               SvgPicture.asset(
-                'assets/icons/login.svg',
+                'assets/icons/product.svg',
                 height: Get.height * 0.4,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.contain,
               ),
               // Dropdown(
               //   listItems: controller.listCategory,
@@ -77,23 +78,23 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSizes.dimen16),
-              LargeButton(
-                backgroundColor: AppColors.primary,
-                isLoading: controller.isLoadingPickFile,
-                onPressed: () async {
-                  controller.pickFile();
-                },
-                textButton: 'Pick Product Image',
-              ),
+              // const SizedBox(height: AppSizes.dimen16),
+              // LargeButton(
+              //   backgroundColor: AppColors.primary,
+              //   isLoading: controller.isLoadingPickFile,
+              //   onPressed: () async {
+              //     controller.pickFile();
+              //   },
+              //   textButton: 'Pick Product Image',
+              // ),
               const SizedBox(height: AppSizes.dimen16),
               LargeButton(
                 backgroundColor: AppColors.primary,
                 isLoading: controller.isLoadingAddProduct,
                 onPressed: () async {
-                  controller.addProduct();
+                  controller.updateProduct();
                 },
-                textButton: 'Save',
+                textButton: 'Update',
               ),
             ],
           ),

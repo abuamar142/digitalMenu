@@ -37,12 +37,13 @@ class DashboardAdminView extends GetView<DashboardAdminController> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1, vertical: Get.height * 0.02),
+        padding: AppSizes.marginAppHaveAppBar,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LargeButton(
               isLoading: controller.isLoadingAddProduct,
+              
               onPressed: () {
                 Get.toNamed(Routes.ADD_PRODUCT);
               },
@@ -52,7 +53,7 @@ class DashboardAdminView extends GetView<DashboardAdminController> {
             LargeButton(
               isLoading: controller.isLoadingAddProduct,
               onPressed: () {
-                Get.toNamed(Routes.ALL_PRODUCT_ADMIN);
+                Get.toNamed(Routes.PRODUCT_ADMIN);
               },
               textButton: 'Products',
             )

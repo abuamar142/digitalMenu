@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 class AppSizes {
   AppSizes._();
 
@@ -31,5 +34,15 @@ class AppSizes {
   static const text22 = 22.0;
 
   static const radius4 = 4.0;
-  static const radius8 = 8.0;
+
+  static BorderRadius allRadius8 = BorderRadius.circular(8);
+
+  static Radius radius8 = const Radius.circular(8);
+
+  static const heightTextField = 48.0;
+
+  static EdgeInsets marginApp = EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05, top: (Get.height * 0.025) + AppBar().preferredSize.height, bottom: Get.height * 0.025);
+  static EdgeInsets marginAppHaveAppBar = EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05, top: Get.height * 0.025, bottom: Get.height * 0.025);
+
+  static Size buttonSize = Size(Get.width, AppSizes.dimen48);
 }

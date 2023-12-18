@@ -22,7 +22,7 @@ class DialogCard2 extends StatelessWidget {
     RxBool isLoading = false.obs;
     RxBool addNote = false.obs;
 
-    // UserProductController controller = Get.find<UserProductController>();
+    // ProductUserController controller = Get.find<ProductUserController>();
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
