@@ -11,23 +11,30 @@ class ResultView extends GetView<ResultController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppSizes.dimen48),
-              height: Get.height * 0.4,
-              child: QrImageView(
-                data: controller.sale.name.isNotEmpty ? controller.sale.name : controller.id,
+      appBar: AppBar(
+        title: const Text('Result View'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: AppSizes.marginAppHaveAppBar,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.dimen48),
+                height: Get.height * 0.4,
+                child: QrImageView(
+                  data: controller.idOrder,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSizes.dimen24),
-            const Text(
-              'Tunjukkan Kode pada Kasir',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
+              const SizedBox(height: AppSizes.dimen24),
+              const Text(
+                'Tunjukkan Kode pada Kasir',
+                style: TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
         ),
       ),
     );

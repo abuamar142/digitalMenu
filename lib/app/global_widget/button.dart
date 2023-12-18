@@ -53,7 +53,7 @@ class LargeButton extends StatelessWidget {
     return Obx(
       () => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(Get.width, 48),
+          fixedSize: AppSizes.buttonSize,
           backgroundColor: isLoading.isFalse ? backgroundColor ?? AppColors.primary : AppColors.red,
           elevation: 4,
           shape: RoundedRectangleBorder(
@@ -76,6 +76,33 @@ class LargeButton extends StatelessWidget {
                 style: AppTextStyles.textStyleW700S14.copyWith(color: AppColors.white),
               ),
       ),
+    );
+  }
+}
+
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton({
+    super.key,
+    required this.isLoading,
+    required this.onPressed,
+    required this.textButton,
+  });
+
+  final RxBool isLoading;
+  final VoidCallback onPressed;
+  final String textButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => isLoading.value
+          ? const CircularProgressIndicator()
+          : Center(
+              child: Text(
+                textButton,
+                style: AppTextStyles.textStyleW700S14.copyWith(color: AppColors.white),
+              ),
+            ),
     );
   }
 }

@@ -6,27 +6,29 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
-  static const CAFE_MENU = _Paths.CAFE_MENU;
+  static const PRODUCT_USER = _Paths.PRODUCT_USER;
   static const CHECKOUT = _Paths.CHECKOUT;
-  static const DETAIL_MENU = _Paths.DETAIL_MENU;
+  static const DETAIL_PRODUCT_USER = _Paths.DETAIL_PRODUCT_USER;
   static const LOGIN = _Paths.LOGIN;
   static const DASHBOARD_ADMIN = _Paths.DASHBOARD_ADMIN;
   static const ADD_PRODUCT = _Paths.ADD_PRODUCT;
-  static const ALL_PRODUCT_ADMIN = _Paths.ALL_PRODUCT_ADMIN;
-  static const DETAIL_MENU_ADMIN = _Paths.DETAIL_MENU_ADMIN;
+  static const PRODUCT_ADMIN = _Paths.PRODUCT_ADMIN;
+  static const DETAIL_PRODUCT_ADMIN = _Paths.DETAIL_PRODUCT_ADMIN;
   static const RESULT = _Paths.RESULT;
+  static const EDIT_PRODUCT = _Paths.EDIT_PRODUCT;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/';
-  static const CAFE_MENU = '/cafe-menu';
+  static const PRODUCT_USER = '/product-user';
   static const CHECKOUT = '/checkout';
-  static const DETAIL_MENU = '/detail-menu';
+  static const DETAIL_PRODUCT_USER = '/detail_product_user';
   static const LOGIN = '/login';
   static const DASHBOARD_ADMIN = '/dashboard_admin';
   static const ADD_PRODUCT = '/add-product';
-  static const ALL_PRODUCT_ADMIN = '/all-product_admin';
-  static const DETAIL_MENU_ADMIN = '/detail-menu-admin';
+  static const PRODUCT_ADMIN = '/product_admin';
+  static const DETAIL_PRODUCT_ADMIN = '/detail-product-admin';
   static const RESULT = '/result';
+  static const EDIT_PRODUCT = '/edit-product';
 }
